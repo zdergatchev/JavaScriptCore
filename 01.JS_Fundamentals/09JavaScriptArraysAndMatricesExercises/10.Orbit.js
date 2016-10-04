@@ -1,4 +1,4 @@
-function diagonalAttack(matrixRows) {
+function orbit(matrixRows) {
     let matrixInput = matrixRows.map(
         row => row.split(' ').map(Number));
     let sizeMatrix = Array.from(matrixInput[0]);
@@ -34,6 +34,6 @@ function diagonalAttack(matrixRows) {
     return matrix.map(row => row.join(' ')).join('\n');
 }
 
-console.log(diagonalAttack(['4 4', '0 0']));
-console.log(diagonalAttack(['5 5', '2 2']));
-console.log(diagonalAttack(['3 3', '2 2']));
+console.log(orbit(['4 4', '0 0']));
+console.log(orbit(['5 5', '2 2']));
+console.log(orbit(['3 3', '2 2']));
