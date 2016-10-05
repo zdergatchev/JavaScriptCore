@@ -1,4 +1,4 @@
-function orbit(matrixRows) {
+function dorbit(matrixRows) {
     let matrixInput = matrixRows.map(
         row => row.split(' ').map(Number));
     let sizeMatrix = Array.from(matrixInput[0]);
@@ -20,13 +20,7 @@ function orbit(matrixRows) {
     for (let row = 0; row < matrix.length; row++) {
         for (let col = 0; col < matrix.length; col++) {
             matrix[rowPoint][colPoint] = 1;
-            if (row != rowPoint && col == colPoint) {
-                matrix[row][col] = Math.abs(row - rowPoint) + 1;
-            }
-            else if (row == rowPoint && col != colPoint) {
-                matrix[row][col] = Math.abs(col - colPoint) + 1;
-            }
-            else if(row != rowPoint || col != colPoint){
+            if(row != rowPoint || col != colPoint){
                 matrix[row][col] = Math.max(Math.abs(row - rowPoint), Math.abs(col - colPoint)) + 1;
             }
         }
