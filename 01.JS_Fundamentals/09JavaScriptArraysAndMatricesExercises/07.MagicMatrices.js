@@ -1,7 +1,6 @@
 function magixMatrix(input){
     let matrix = input.map(row => row.split(' ').map(Number));
     let sumRow = 0;
-    let sumCols = 0;
     let sum = matrix[0].reduce((a, b) => a + b);
 
     for(let row = 1; row < matrix.length; row++){
@@ -12,13 +11,15 @@ function magixMatrix(input){
     }
 
     for (let col = 0; col < matrix[0].length; col++){
+        let sumCols = 0;
         for (let row = 0; row < matrix.length; row++) {
             sumCols += matrix[row][col];
-            if (sum != sumCols) {
-                return false;
-            }
+        }
+        if (sum != sumCols) {
+            return false;
         }
     }
+
     return true;
 }
 
