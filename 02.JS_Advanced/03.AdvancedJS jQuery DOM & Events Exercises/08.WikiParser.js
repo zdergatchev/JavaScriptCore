@@ -1,13 +1,32 @@
 function wikiParser(selector) {
-    let text = $(selector).text();
-    let formatted = text
-        .replace(/===([^='\[]+?)===/g, (m, g) => `<h3>${g}</h3>`)
-        .replace(/==([^='\[]+?)==/g, (m, g) => `<h2>${g}</h2>`)
-        .replace(/=([^='\[]+?)=/g, (m, g) => `<h1>${g}</h1>`)
-        .replace(/'''([^'=\[]+?)'''/g, (m, g) => `<b>${g}</b>`)
-        .replace(/''([^'=\[]+?)''/g, (m, g) => `<i>${g}</i>`)
-        .replace(/\[\[([^'=\[\]]+?)\|([^'=\[\]]+?)]]/g, (m, g1, g2) => `<a href="/wiki/${g1}">${g2}</a>`)
-        .replace(/\[\[([^'=\[\]]+?)]]/g, (m, g) => `<a href="/wiki/${g}">${g}</a>`);
+    let content = $(selector);
+    let text = content.text();
 
-    $(selector).html(formatted);
+    //Replace
+    text = replaceTag(text, '===', 'h3');
+    text = replaceTag(text, '==', 'h2');
+    text = replaceTag(text, '=', 'h1');
+    text = replaceTag(text, "'''", 'b');
+    text = replaceTag(text, "''", 'i');
+    text = replaceAnchor(text);
+
+    function replaceTag(str, symbol, tag) {
+        let pattern = `${symbol}(.*?)${symbol}`;
+        let regex = new RegEx(pattern, 'g');
+        return str.replace(regex, (m, g) => `<${tag}>${g}</${tag}>`);
+    }
+
+    function replaceAnchor(str){
+        let result = str;
+        let pattern = `\\[\\[([^\\[\\]]*?)\\|([^\\[\\]]*?)\\]\\]`;
+        let regex = new RegExp(pattern, 'g');
+        result = result.replace(regex, (m, g1, g2) => `<a href="/wiki/${g1}">${g2}</a>`);
+
+        pattern = `\\[\\[([^\\[\\]]*?)\\]\\]`;
+        regex = new RegEx(pattern, 'g');
+        result = result.replace(regex, (m, g) => `<a href="/wiki/${g}">${g}</a>`);
+        return result;
+    }
+
+    content.html(text);
 }
